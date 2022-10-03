@@ -1,7 +1,7 @@
 # Text_Summarization
 ## Usage
-- allow users to input their own documents that they may not have time to read
-- constructs a summary outlining the most important concepts of that document
+- Allow users to input their own documents that they may not have time to read
+- Constructs a summary outlining the most important concepts of that document
 ## Potential Use Cases
 - Terms of Service Documents
 - Research Papers
