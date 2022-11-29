@@ -1,0 +1,18 @@
+db
+ |
+ |__text_ID
+ |
+ |__text
+ |
+ |__ summary
+ |
+ |__ keywords
+
+ |
+ |__text_ID
+ |
+ |__text
+ |
+ |__ summary
+ |
+ |__ keywords
