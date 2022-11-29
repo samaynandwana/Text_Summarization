@@ -28,10 +28,14 @@
     <button type="submit">Submit</button>
   </form>
   <h3>Your Summary:</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<p>{{ summary }}</p>
 <h3>Other Facts:</h3>
 <h5>Keywords: </h5>
+
 <h5>Most Common Words: </h5>
+{% for item in most_common_words %}
+<p>{{ item[0] }} : {{ item[1] }}</p>
+{% endfor %}
 
 </center>
 </body>

@@ -2,23 +2,28 @@ from flask import Flask, render_template, url_for, request, redirect, flash, sen
 from summarize import summarize
 import os
 from werkzeug.utils import secure_filename
-from pymongo import MongoClient
+from collections import Counter
+from nltk.corpus import stopwords
 
 
 app = Flask(__name__)
-client = MongoClient('localhost', 27017)
-db = client.flask_db
-todos = db.todos
 ALLOWED_EXTENSIONS = {'txt'}
 UPLOAD_FOLDER = './uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.secret_key = 'super secret key'
+cachedStopWords = stopwords.words("english")
 
-
+def remove_stopwords(file_text):
+        return ' '.join([word for word in file_text.split() if word not in cachedStopWords])
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def most_common_words(file_string):
+    split_it = file_string.split()
+    counter = Counter(split_it)
+    most_occur = counter.most_common(4)
+    return most_occur
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -39,6 +44,9 @@ def index():
             with open(os.path.join(app.config['UPLOAD_FOLDER'], filename)) as f:
                 lines = f.read()
                 summary = summarize(lines, 0.05)
+                without_stopwords = remove_stopwords(lines)
+                most_common = most_common_words(lines)
+                return render_template('summary.html', summary=summary, most_common_words=most_common)
     return render_template('index.html')
 
 
