@@ -22,7 +22,7 @@
   <h4>Potential Use Cases</h3>
   
 
-  <h2>Upload your File here</h2>
+  <h2>Upload another file here:</h2>
   <form method=post enctype=multipart/form-data>
     <input type="file" id="myFile" name="file" accept=".txt">
     <button type="submit">Submit</button>
@@ -30,7 +30,6 @@
   <h3>Your Summary:</h3>
 <p>{{ summary }}</p>
 <h3>Other Facts:</h3>
-<h5>Keywords: </h5>
 
 <h5>Most Common Words: </h5>
 {% for item in most_common_words %}

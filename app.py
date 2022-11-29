@@ -10,18 +10,17 @@ app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'txt'}
 UPLOAD_FOLDER = './uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-cachedStopWords = stopwords.words("english")
+stopWords = ['a', 'an', 'the', 'and', 'it', 'for', 'or', 'but', 'in', 'my', 'your', 'our', 'their', 'of', 'to']
 
 def remove_stopwords(file_text):
-        return ' '.join([word for word in file_text.split() if word not in cachedStopWords])
+        return [word for word in file_text.split() if word.lower() not in stopWords]
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def most_common_words(file_string):
-    split_it = file_string.split()
-    counter = Counter(split_it)
+def most_common_words(split_file):
+    counter = Counter(split_file)
     most_occur = counter.most_common(4)
     return most_occur
 
@@ -45,7 +44,7 @@ def index():
                 lines = f.read()
                 summary = summarize(lines, 0.05)
                 without_stopwords = remove_stopwords(lines)
-                most_common = most_common_words(lines)
+                most_common = most_common_words(without_stopwords)
                 return render_template('summary.html', summary=summary, most_common_words=most_common)
     return render_template('index.html')
 
